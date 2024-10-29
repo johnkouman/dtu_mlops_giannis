@@ -1,6 +1,5 @@
 import click
 import matplotlib.pyplot as plt
-
 import torch
 from model import MyAwesomeModel
 
@@ -51,7 +50,7 @@ def train(lr, batch_size, epochs) -> None:
                 print(f"Epoch {epoch}, iter {i}, loss: {loss.item()}")
 
     print("Training complete")
-    torch.save(model.state_dict(), "./models/model.pth")
+    torch.save(model.state_dict(), "./model.pth")
     fig, axs = plt.subplots(1, 2, figsize=(15, 5))
     axs[0].plot(statistics["train_loss"])
     axs[0].set_title("Train loss")
