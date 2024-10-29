@@ -1,11 +1,16 @@
+import typer
 from sklearn.datasets import load_breast_cancer
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
+from typing_extensions import Annotated
+
+app = typer.Typer()
 
 
-def train():
+@app.command()
+def train(output: Annotated[str, typer.Option("--output", "-o")] = "model.ckpt"):
     """Train and evaluate the model."""
     # Load the dataset
     data = load_breast_cancer()
@@ -13,7 +18,9 @@ def train():
     y = data.target
 
     # Split the dataset into training and testing sets
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+    x_train, x_test, y_train, y_test = train_test_split(
+        x, y, test_size=0.2, random_state=42
+    )
 
     # Standardize the features
     scaler = StandardScaler()
@@ -38,4 +45,4 @@ def train():
 
 
 if __name__ == "__main__":
-    train()
+    app()

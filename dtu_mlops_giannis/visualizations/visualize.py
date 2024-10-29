@@ -4,15 +4,19 @@ import torch
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 
-from dtu_mlops_giannis.model import MyAwesomeModel
+from dtu_mlops_giannis.models.model import MyAwesomeModel
 
 
 @click.command()
 @click.option("model_checkpoint", default="model.pth", help="Path to model checkpoint")
-@click.option("processed_dir", default="data/processed", help="Path to processed data directory")
+@click.option(
+    "processed_dir", default="data/processed", help="Path to processed data directory"
+)
 @click.option("figure_dir", default="reports/figures", help="Path to save figures")
 @click.option("figure_name", default="embeddings.png", help="Name of the figure")
-def visualize(model_checkpoint: str, processed_dir: str, figure_dir: str, figure_name: str) -> None:
+def visualize(
+    model_checkpoint: str, processed_dir: str, figure_dir: str, figure_name: str
+) -> None:
     """Visualize model predictions."""
     model = MyAwesomeModel().load_state_dict(torch.load(model_checkpoint))
     model.eval()
