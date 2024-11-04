@@ -1,3 +1,5 @@
+import os
+
 import click
 import matplotlib.pyplot as plt
 import torch
@@ -5,7 +7,11 @@ from model import MyAwesomeModel
 
 from data import corrupt_mnist
 
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
+DEVICE = torch.device(
+    "cuda"
+    if torch.cuda.is_available()
+    else "mps" if torch.backends.mps.is_available() else "cpu"
+)
 
 
 @click.group()
@@ -51,6 +57,7 @@ def train(lr, batch_size, epochs) -> None:
 
     print("Training complete")
     torch.save(model.state_dict(), "./model.pth")
+    os.makedirs("../reports/figures", exist_ok=True)
     fig, axs = plt.subplots(1, 2, figsize=(15, 5))
     axs[0].plot(statistics["train_loss"])
     axs[0].set_title("Train loss")
@@ -85,7 +92,6 @@ def evaluate(model_checkpoint) -> None:
 
 cli.add_command(train)
 cli.add_command(evaluate)
-
 
 if __name__ == "__main__":
     cli()
