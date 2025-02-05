@@ -6,7 +6,7 @@ def normalize(images: torch.Tensor) -> torch.Tensor:
     """Normalize images."""
     return (images - images.mean()) / images.std()
 
-
+#test
 @click.command()
 @click.option("raw_dir", default="data/raw", help="Path to raw data directory")
 @click.option("processed_dir", default="data/processed", help="Path to processed data directory")
